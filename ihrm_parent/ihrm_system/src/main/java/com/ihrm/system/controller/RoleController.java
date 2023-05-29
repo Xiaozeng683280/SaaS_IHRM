@@ -105,13 +105,20 @@ public class RoleController extends BaseController {
      */
     @RequestMapping(value = "/role/userId/{id}", method = RequestMethod.GET)
     public Result findRolesByUserId(@PathVariable(name = "id") String id) {
-        List<RoleAndUserRelations> roleByUserId = userAndRoleRelationsService.findRoleByUserId(id);
-        if (!ObjectUtils.isEmpty(roleByUserId)){
-            List<Role> roles = userAndRoleRelationsService.getRoleDetailByRoleId(roleByUserId);
-            if (!ObjectUtils.isEmpty(roles)){
-                return new Result(ResultCode.SUCCESS , roles);
+        try {
+            System.out.println("1");
+            List<RoleAndUserRelations> roleByUserId = userAndRoleRelationsService.findRoleByUserId(id);
+            System.out.println("roleByUserId" + roleByUserId.toString());
+            if (!ObjectUtils.isEmpty(roleByUserId)){
+                List<Role> roles = userAndRoleRelationsService.getRoleDetailByRoleId(roleByUserId);
+                if (!ObjectUtils.isEmpty(roles)){
+                    return new Result(ResultCode.SUCCESS , roles);
+                }
             }
+        }catch (Exception e){
+            System.out.println(e.getMessage());
         }
+
         return new Result(ResultCode.SUCCESS);
     }
 

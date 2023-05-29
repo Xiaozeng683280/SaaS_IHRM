@@ -78,7 +78,7 @@ public class ArchiveService {
         //查询当前企业的福利津贴
         Settings setting = settingsService.findById(companyId);
         //查询所有的用户
-        Page<Map> users = userSalaryDao.findPage(companyId, null);
+        Page<Map> users = userSalaryDao.findPage(companyId,null,null, null,null);
         //遍历用户数据
         for (Map user : users.getContent()) {
             //构造SalaryArchiveDetail

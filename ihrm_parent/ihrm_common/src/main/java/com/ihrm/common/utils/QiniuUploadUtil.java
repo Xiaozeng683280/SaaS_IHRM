@@ -10,15 +10,15 @@ import com.qiniu.util.Auth;
 
 public class QiniuUploadUtil {
 
-    private static final String accessKey = "JhQMRdGXh1X5coGEbIwootTtle8RssYWqhmaaLBH";
-    private static final String secretKey = "ZUNzUpHQjgj7BBauNpXwEnkZiqRAkeZJ3diJOaIB";
-    private static final String bucket = "arvinhan-ihrm";
-    private static final String prix = "http://qav8b72pi.bkt.clouddn.com/";
+    private static final String accessKey = "pOhLx7y-S_jFvCO14TsY1f9YCJ9lTwMFQvPw26ja";
+    private static final String secretKey = "YcZOIkh7ke8TqeFPi8K6koEbVL2aqXEaemM34Hgp";
+    private static final String bucket = "lilz";
+    private static final String prix = "http://rsvqyxm9o.hn-bkt.clouddn.com/";
     private UploadManager manager;
 
     public QiniuUploadUtil() {
         //初始化基本配置
-        Configuration cfg = new Configuration(Zone.zone0());
+        Configuration cfg = new Configuration(Zone.zone2());
         //创建上传管理器
         manager = new UploadManager(cfg);
     }
@@ -33,9 +33,9 @@ public class QiniuUploadUtil {
             Response response = manager.put(bytes, imgName, upToken);
             DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
             //返回请求地址
-            return prix+putRet.key+"?t="+System.currentTimeMillis();
+            return prix+putRet.key;
         } catch (Exception ex) {
-            ex.printStackTrace();
+            System.out.println( ex.getMessage());
         }
         return null;
     }

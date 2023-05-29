@@ -11,6 +11,10 @@ server:
   port: 9091
 #spring配置
 spring:
+  servlet:
+    multipart:
+      max-file-size: 30MB
+      max-request-size: 30MB
   #1.应用配置
   application:
     name: ihrm-gate #指定服务名
@@ -46,6 +50,12 @@ zuul:
       stripPrefix: false
       sentiviteHeaders:   #将指定路由的敏感头设置为空
       customSensitiveHeaders: true #对指定路由开启自定义敏感头
+    ihrm-agreement: #客户合同
+      path: /agreement/** #配置请求URL的请求规则
+      serviceId: ihrm-employee #指定Eureka注册中心中的服务id
+      stripPrefix: false
+      sentiviteHeaders:   #将指定路由的敏感头设置为空
+      customSensitiveHeaders: true #对指定路由开启自定义敏感头
     ihrm-social-securitys: #社保
       path: /social_securitys/** #配置请求URL的请求规则
       serviceId: ihrm-social-securitys #指定Eureka注册中心中的服务id
@@ -70,7 +80,7 @@ zuul:
       stripPrefix: false
       sentiviteHeaders:   #将指定路由的敏感头设置为空
       customSensitiveHeaders: true #对指定路由开启自定义敏感头
-    ihrm-user-audit: #用户自助-审批
+    ihrm-audit: #用户自助-审批
       path: /user/** #配置请求URL的请求规则
       serviceId: ihrm-audit #指定Eureka注册中心中的服务id
       stripPrefix: false
@@ -92,3 +102,9 @@ ribbon:
   MaxAutoRetriesNextServer: 1
   eureka:
     enabled: true
+security:
+  oauth2:
+    client:
+      ignore-urls:
+        - /sys/user/**
+        - /api/sys/user/**

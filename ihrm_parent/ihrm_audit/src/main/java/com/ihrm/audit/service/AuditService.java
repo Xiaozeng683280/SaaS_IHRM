@@ -121,15 +121,18 @@ public class AuditService {
      * @param companyId 企业id
      */
     public void startProcess(Map<String, String> map, String companyId) {
+        if(StringUtils.isEmpty(companyId)){
+            companyId = "1";
+        }
         //构造业务数据
         String userId = map.get("userId");
         String processKey = map.get("processKey");
         String processName = map.get("processName");
-
+        System.out.println("111111");
         User user = feignClientService.getUserInfoByUserId(userId);
         ProcInstance instance = new ProcInstance();
         BeanUtils.copyProperties(user, instance);
-
+        System.out.println("22222");
         instance.setUserId(userId);
         instance.setProcessId(idWorker.nextId() + "");
         instance.setProcApplyTime(new Date());
@@ -139,23 +142,29 @@ public class AuditService {
         instance.setProcessState("1");
         String data = JSON.toJSONString(map);
         instance.setProcData(data);
+
+        System.out.println("33");
         //查询流程定义
         ProcessDefinition result = repositoryService.createProcessDefinitionQuery().processDefinitionKey(processKey).processDefinitionTenantId(companyId).latestVersion().singleResult();
+        System.out.println("44");
         //开启流程
         Map<String, Object> vars = new HashMap<>(16);
         if ("process_leave".equals(processKey)) {
             //请假
             vars.put("days", map.get("duration"));
         }
-
+        System.out.println("55");
         //流程定义的id,业务数据id,内置的参数
         runtimeService.startProcessInstanceById(result.getId(), instance.getProcessId(), vars);
         ProcessInstance processInstance = runtimeService.startProcessInstanceById(result.getId(), instance.getProcessId(), vars);
+        System.out.println("66");
         //自动执行第一个任务节点
         Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
         taskService.complete(task.getId());
+        System.out.println("77");
         //获取下一个节点数据,填充业务数据中当前待审批人
         Task nextTask = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
+        System.out.println("88");
         if (nextTask != null) {
             List<User> users = findCurrUsers(nextTask, user);
             StringBuilder userNameSb = new StringBuilder();

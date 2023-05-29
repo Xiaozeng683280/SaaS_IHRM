@@ -58,7 +58,7 @@ public class LoginFilter extends ZuulFilter {
         /*//登录校验逻辑
         //获取Zuul提供的请求上下文对象
         RequestContext ctx = RequestContext.getCurrentContext();
-        //从上下文中获取request对象
+        //从文中获取request对象
         HttpServletRequest req = ctx.getRequest();
         //从请求中获取token
         String token = req.getHeader("Authorization");

@@ -81,6 +81,7 @@ public class ShiroConfiguration {
         //配置请求连接过滤器配置
         //匿名访问（所有人员可以使用）
         filterMap.put("/sys/login", "anon");
+        filterMap.put("/sys/user/**", "anon");
         filterMap.put("/autherror", "anon");
         filterMap.put("/employees/export/*" , "anon");
         filterMap.put("/employees/*/pdf" , "anon");

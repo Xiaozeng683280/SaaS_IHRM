@@ -46,7 +46,7 @@ public class ProcessService {
      * @param companyId 企业id
      * @return 企业id对应的所有已部署流程
      */
-    public List getProcessDefinitionList(String companyId) {
+    public List<ProcessDefinition> getProcessDefinitionList(String companyId) {
         return repositoryService.createProcessDefinitionQuery().processDefinitionTenantId(companyId).latestVersion().list();
     }
 

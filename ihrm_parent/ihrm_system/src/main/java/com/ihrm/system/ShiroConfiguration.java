@@ -60,6 +60,7 @@ public class ShiroConfiguration {
         Map<String,String> filterMap = new LinkedHashMap<>();
         //anon -- 匿名访问
         filterMap.put("/sys/login","anon");
+        filterMap.put("/sys/user/**","anon");
         filterMap.put("/sys/city/**","anon");
         filterMap.put("/sys/faceLogin/**","anon");
         filterMap.put("/autherror","anon");

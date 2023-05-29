@@ -32,6 +32,7 @@ public class UserAndRoleRelationsService extends BaseService {
     public List<Role> getRoleDetailByRoleId(List<RoleAndUserRelations> roleByUserId) {
         List<Role> res = new ArrayList<>();
         for (RoleAndUserRelations userAndRoleRea : roleByUserId) {
+            System.out.println(userAndRoleRea.getRoleId());
             Role role = roleService.findById(userAndRoleRea.getRoleId());
             if (!ObjectUtils.isEmpty(role)){
                 res.add(role);

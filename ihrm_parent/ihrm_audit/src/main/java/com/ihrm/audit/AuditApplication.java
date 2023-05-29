@@ -13,8 +13,8 @@ import org.springframework.context.annotation.Bean;
 //1.配置springboot的包扫描
 @SpringBootApplication(scanBasePackages = "com.ihrm",exclude ={ SecurityAutoConfiguration.class} )
 //2.配置jpa注解的扫描
-@EntityScan(value="com.ihrm.audit.entity")
-//3.注册到eureka
+@EntityScan(value="com.ihrm.audit")
+////3.注册到eureka
 @EnableEurekaClient
 @EnableDiscoveryClient
 @EnableFeignClients

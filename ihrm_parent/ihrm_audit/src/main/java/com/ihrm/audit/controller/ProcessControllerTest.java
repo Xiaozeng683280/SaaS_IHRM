@@ -1,7 +1,5 @@
 package com.ihrm.audit.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.ihrm.audit.entity.ProcInstance;
 import com.ihrm.audit.entity.ProcTaskInstance;
 import com.ihrm.audit.service.AuditService;
@@ -10,17 +8,12 @@ import com.ihrm.common.controller.BaseController;
 import com.ihrm.common.entity.PageResult;
 import com.ihrm.common.entity.Result;
 import com.ihrm.common.entity.ResultCode;
-import com.ihrm.common.utils.BeanMapUtils;
-import org.activiti.engine.repository.ProcessDefinition;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -29,11 +22,10 @@ import java.util.Map;
  * @author: hyl
  * @date: 2020/03/19
  **/
-
-@RestController
 @CrossOrigin
-@RequestMapping("/user/process")
-public class ProcessController extends BaseController {
+@RestController
+@RequestMapping("/users")
+public class ProcessControllerTest extends BaseController {
 
     @Resource
     private ProcessService processService;
@@ -45,10 +37,9 @@ public class ProcessController extends BaseController {
      * 部署流程
      */
     @RequestMapping(value = "/deploy" , method = RequestMethod.POST)
-    public Result deploy(@RequestParam(value = "file" ,required = false)MultipartFile file, HttpServletRequest request,
-                         HttpServletResponse response) throws IOException {
+    public Result deploy(@RequestParam("file")MultipartFile file) throws IOException {
         processService.deployProcess(file , companyId);
-        return new Result(ResultCode.SUCCESS,"1");
+        return new Result(ResultCode.SUCCESS);
     }
 
     /**
@@ -56,9 +47,8 @@ public class ProcessController extends BaseController {
      */
     @RequestMapping(value = "/definition" , method = RequestMethod.GET)
     public Result definitionList() {
-        List<ProcessDefinition> list = processService.getProcessDefinitionList(companyId);
-        return new Result(ResultCode.SUCCESS , BeanMapUtils.activitiResult(list));
-
+        List list = processService.getProcessDefinitionList(companyId);
+        return new Result(ResultCode.SUCCESS , list);
     }
 
     /**

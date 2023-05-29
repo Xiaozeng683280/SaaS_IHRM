@@ -23,4 +23,7 @@ spring:
   redis:
     host: 127.0.0.1
     port: 6379
-
+  servlet:
+    multipart:
+      max-file-size: 30MB
+      max-request-size: 30MB

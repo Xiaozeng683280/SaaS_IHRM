@@ -9,6 +9,7 @@ import com.ihrm.salarys.service.SalaryService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Map;
 
 @CrossOrigin
@@ -24,6 +25,11 @@ public class SalaryController extends BaseController {
 	public Result modifyGet(@PathVariable(value = "userId") String userId) throws Exception {
 		UserSalary userSalary = salaryService.findUserSalary(userId);
 		return new Result(ResultCode.SUCCESS, userSalary);
+	}
+	//查询用户详情
+	@RequestMapping(value = "/getUserInfo/{userId}", method = RequestMethod.GET)
+	public Result getUserInfo(@PathVariable(value = "userId") String userId) throws Exception {
+		return new Result(ResultCode.SUCCESS, salaryService.getUserInfo(userId));
 	}
 
 	//调薪
@@ -45,11 +51,15 @@ public class SalaryController extends BaseController {
 	//查询列表
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
 	public Result list(@RequestBody Map map) {
+		System.out.println("111");
 		//1.获取请求参数,page,size
 		Integer page = (Integer)map.get("page");
 		Integer pageSize = (Integer)map.get("pageSize");
+
 		//2.调用service查询
-		PageResult pr = salaryService.findAll(page,pageSize,companyId);
+		PageResult pr = salaryService.findAll(page,pageSize,companyId,map);
 		return new Result(ResultCode.SUCCESS, pr);
 	}
+
+
 }

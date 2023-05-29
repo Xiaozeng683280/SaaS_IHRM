@@ -22,7 +22,9 @@ public class BaseExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
     public Result error(HttpServletRequest request, HttpServletResponse response, Exception e) {
+        System.out.println(e.getMessage());
         if (e.getClass() == CommonException.class) {
+            System.out.println(e.getMessage());
             //类型转型
             CommonException ce = (CommonException) e;
             return new Result(ce.getResultCode());
